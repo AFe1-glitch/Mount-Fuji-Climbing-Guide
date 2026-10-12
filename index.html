@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>富士山攀登攻略 · 山岳日本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== 导航栏 ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#hero" class="nav__brand">
+      <span class="nav__emoji" aria-hidden="true">🗻</span>
+      <span>富士山<span class="nav__brand-en">Fuji</span></span>
+    </a>
+    <nav class="nav__links">
+      <a href="#routes">登山路线</a>
+      <a href="#logistics">出行清单</a>
+      <a href="#schedule">行程安排</a>
+      <a href="#gallery">云海影像</a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__photo" style="background-image:url('img/hero-bg.png')"></div>
+    <div class="hero__veil"></div>
+    <div class="hero__stars"></div>
+    <div class="hero__stars hero__stars--d"></div>
+    <div class="hero__glow"></div>
+  </div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">MOUNT FUJI · 3776m</p>
+    <h1 class="hero__title">
+      登<b>富士山</b><br>赴一场 7 月的 <em>云海之约</em>
+    </h1>
+    <p class="hero__sub">日本最高峰 · 世界文化遗产 · 每年 7–9 月开放登山季<br>精选 4 条经典路线 · 全程中文领队 · 专业安全保障</p>
+
+    <div class="hero__actions">
+      <a href="#routes" class="btn btn--primary">探索登山路线</a>
+      <a href="#logistics" class="btn btn--ghost">查看出行清单</a>
+    </div>
+
+    <div class="hero__stats">
+      <div class="stat">
+        <span class="stat__num" data-count="3776">0</span><span class="stat__unit">m</span>
+        <p>富士山海拔</p>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="4">0</span>
+        <p>经典登山路线</p>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="5">0</span><span class="stat__unit">h+</span>
+        <p>登顶所需时间</p>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="98">0</span><span class="stat__unit">%</span>
+        <p>游客好评率</p>
+      </div>
+    </div>
+  </div>
+  <a href="#routes" class="hero__scroll" aria-label="向下滚动"><span></span></a>
+</section>
+
+<!-- ===== 路线选择 ===== -->
+<section class="section" id="routes">
+  <div class="section__head">
+    <p class="section__eyebrow">ROUTES</p>
+    <h2 class="section__title">四大经典登山路线</h2>
+    <p class="section__desc">每条路线难度与风景各有千秋，根据你的体能与目标选择最适合的那一条。</p>
+  </div>
+
+  <div class="routes" id="routeTabs">
+    <button class="routes__tab routes__tab--active" data-route="subashiri">
+      <span class="routes__tab-name">御来栖路线</span>
+      <span class="routes__tab-tag">人气首选</span>
+    </button>
+    <button class="routes__tab" data-route="yoshida">
+      <span class="routes__tab-name">吉田路线</span>
+      <span class="routes__tab-tag">风景绝佳</span>
+    </button>
+    <button class="routes__tab" data-route="fujigawara">
+      <span class="routes__tab-name">富士川路线</span>
+      <span class="routes__tab-tag">人少清净</span>
+    </button>
+    <button class="routes__tab" data-route="gotemba">
+      <span class="routes__tab-name">裾垂路线</span>
+      <span class="routes__tab-tag">挑战极限</span>
+    </button>
+
+    <div class="routes__panel" id="routePanel">
+      <!-- 内容由 JS 渲染 -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== 行程时间线 ===== -->
+<section class="section section--alt" id="schedule">
+  <div class="section__head">
+    <p class="section__eyebrow">ITINERARY</p>
+    <h2 class="section__title">登顶一日 · 详细行程</h2>
+    <p class="section__desc">以御来栖路线为例，7 月夜间出发，清晨登顶看日出的经典节奏。</p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline__item" data-step="1">
+      <div class="timeline__dot"></div>
+      <div class="timeline__card">
+        <span class="timeline__time">20:00</span>
+        <h3>御来栖山口集合出发</h3>
+        <p>乘坐接驳巴士抵达海拔 2,350m 的御来栖五合目起点，领取装备包、头灯检查，简短安全说明后出发。</p>
+      </div>
+    </div>
+    <div class="timeline__item" data-step="2">
+      <div class="timeline__dot"></div>
+      <div class="timeline__card">
+        <span class="timeline__time">22:30</span>
+        <h3>四合目 3,000m</h3>
+        <p>抵达四合目补给点，短暂休息、调整呼吸节奏。夜间路段全程头灯照明，领队每 30 分钟提醒一次步频。</p>
+      </div>
+    </div>
+    <div class="timeline__item" data-step="3">
+      <div class="timeline__dot"></div>
+      <div class="timeline__card">
+        <span class="timeline__time">02:00</span>
+        <h3>新合目 3,300m</h3>
+        <p>最后一处大补给站。海拔进入高反敏感区，建议小口多次补充水分，有轻微高反症状立即告知领队。</p>
+      </div>
+    </div>
+    <div class="timeline__item" data-step="4">
+      <div class="timeline__dot"></div>
+      <div class="timeline__card">
+        <span class="timeline__time">04:30</span>
+        <h3>登顶 · 3,776m</h3>
+        <p>凌晨 4:30 前后抵达山顶，云海之上等待日出。7 月日出约在 04:20，山顶气温约 -5°C，请做好保暖。</p>
+      </div>
+    </div>
+    <div class="timeline__item" data-step="5">
+      <div class="timeline__dot"></div>
+      <div class="timeline__card">
+        <span class="timeline__time">06:30</span>
+        <h3>下山 · 返程</h3>
+        <p>看完日出后沿原路下山，约 09:00 回到五合目，巴士返回新宿，全程约 11 小时结束。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 出行清单 ===== -->
+<section class="section" id="logistics">
+  <div class="section__head">
+    <p class="section__eyebrow">GEAR & PACKING</p>
+    <h2 class="section__title">出行清单 · 别忘带</h2>
+    <p class="section__desc">7–9 月山顶昼夜温差大，夜间登顶气温可低至 -5°C，以下物品务必备齐。</p>
+  </div>
+
+  <div class="gear-grid">
+    <div class="gear-card">
+      <div class="gear-card__icon">🧥</div>
+      <div class="gear-card__body">
+        <h3>防寒层</h3>
+        <ul>
+          <li>轻薄羽绒服或抓绒衣（山顶 -5°C）</li>
+          <li>防风防水外套（防风是关键）</li>
+          <li>薄手套 + 帽子（护耳款更佳）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-card__icon">🥾</div>
+      <div class="gear-card__body">
+        <h3>鞋袜</h3>
+        <ul>
+          <li>防滑登山鞋（碎石路面必备）</li>
+          <li>厚羊毛袜 × 2 双（备用）</li>
+          <li>鞋套（下山时防碎石）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="gear-card">
+      <div class="gear-card__icon">💡</div>
+      <div class="gear-card__body">
+        <h3>照明与工具</h3>
+        <ul>
+          <li>头灯（含备用电池）</li>
+          <li>登山杖（碎石路段防滑）</li>
+          <li>充电宝 + 手机（山顶无信号）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="garbage-note">
+      <h3>⚠️ 重要提醒</h3>
+      <p>富士山登山<b>必须将全部垃圾带下山</b>，山顶无垃圾桶。违反者将依法处罚，请自觉维护山岳环境。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 影像墙 ===== -->
+<section class="section section--dark" id="gallery">
+  <div class="section__head">
+    <p class="section__eyebrow">GALLERY</p>
+    <h2 class="section__title">云海与日出 · 影像记录</h2>
+    <p class="section__desc">每一次登顶，都是独一无二的风景。以下是往届学员记录的富士山瞬间。</p>
+  </div>
+
+  <div class="gallery">
+    <figure class="gallery__item gallery__item--tall">
+      <div class="gallery__img" style="background-image:url('img/g1-sunrise.png')">
+        <span class="gallery__label">🌅 凌晨 4:30 山顶日出</span>
+      </div>
+    </figure>
+    <figure class="gallery__item">
+      <div class="gallery__img" style="background-image:url('img/g5-hiker.jpg')">
+        <span class="gallery__label">⛰️ 碎石坡上行 · 御来栖</span>
+      </div>
+    </figure>
+    <figure class="gallery__item">
+      <div class="gallery__img" style="background-image:url('img/g2-snow.png')">
+        <span class="gallery__label">❄️ 山顶积雪 · 早季限定</span>
+      </div>
+    </figure>
+    <figure class="gallery__item gallery__item--tall">
+      <div class="gallery__img" style="background-image:url('img/g4-lodge.png')">
+        <span class="gallery__label">🏯 山脚旅舍 · 五合目</span>
+      </div>
+    </figure>
+    <figure class="gallery__item">
+      <div class="gallery__img" style="background-image:url('img/g6-lake.png')">
+        <span class="gallery__label">🪞 湖畔倒影 · 日出金</span>
+      </div>
+    </figure>
+    <figure class="gallery__item">
+      <div class="gallery__img" style="background-image:url('img/g3-dusk.png')">
+        <span class="gallery__label">🌄 黄昏霞光 · 下山途中</span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__col">
+      <span class="footer__brand">富士山攀登攻略</span>
+      <p>山岳日本 · 专业富士山登山服务</p>
+      <p>每年 7 月 1 日 – 9 月 10 日开放</p>
+    </div>
+    <div class="footer__col">
+      <h4>快速链接</h4>
+      <a href="#routes">登山路线</a>
+      <a href="#logistics">出行清单</a>
+      <a href="#schedule">行程安排</a>
+    </div>
+    <div class="footer__col">
+      <h4>关于本站</h4>
+      <p>此网站由 AFe1 使用 DeepSeek 协作完成</p>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 富士山攀登攻略 · 山岳日本</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
