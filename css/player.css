@@ -1,0 +1,343 @@
+/* ============================================================
+   音乐播放器插件 · Mount Fuji Player
+   独立样式，不依赖 style.css，但沿用站点配色变量
+   ============================================================ */
+
+.mf-player {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 95; /* 低于导航栏(100)，避免遮挡移动端菜单 */
+  font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.5;
+}
+
+/* ---------- 圆形主按钮 ---------- */
+.mf-fab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 1px solid var(--border-hover, rgba(255, 255, 255, 0.18));
+  border-radius: 50%;
+  background: linear-gradient(145deg, #232c58, #141a36);
+  color: var(--text, #e8ecf8);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.mf-fab:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--accent, #ff8e5e);
+}
+.mf-fab:focus-visible {
+  outline: 2px solid var(--accent2, #6ea8ff);
+  outline-offset: 3px;
+}
+.mf-fab svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+/* 播放中的呼吸光环 */
+.mf-player.is-playing .mf-fab {
+  border-color: var(--accent, #ff8e5e);
+  animation: mf-pulse 2.6s ease-out infinite;
+}
+@keyframes mf-pulse {
+  0%   { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 0 rgba(255, 142, 94, 0.45); }
+  70%  { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 18px rgba(255, 142, 94, 0); }
+  100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 0 rgba(255, 142, 94, 0); }
+}
+
+/* 播放中，按钮里的唱片图标旋转 */
+.mf-player.is-playing .mf-fab__disc {
+  animation: mf-spin 3.6s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes mf-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- 展开面板 ---------- */
+.mf-panel {
+  position: absolute;
+  right: 0;
+  bottom: 74px;
+  width: 330px;
+  padding: 18px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius, 18px);
+  background: rgba(20, 26, 54, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.97);
+  transform-origin: bottom right;
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+}
+.mf-player.is-open .mf-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.mf-panel__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.mf-panel__meta {
+  flex: 1;
+  min-width: 0;
+}
+.mf-panel__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text, #e8ecf8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mf-panel__artist {
+  font-size: 12px;
+  color: var(--text-dim, #8e96b8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mf-panel__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-faint, #5a6285);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.mf-panel__close:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  color: var(--text, #e8ecf8);
+}
+.mf-panel__close svg { width: 16px; height: 16px; }
+
+/* ---------- 唱片 + 播放键 ---------- */
+.mf-stage {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.mf-vinyl {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    #2a3462 0 2px,
+    #1b2340 2px 4px
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+.mf-player.is-playing .mf-vinyl {
+  animation: mf-spin 3.6s linear infinite;
+}
+.mf-vinyl__label {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--accent, #ff8e5e), #e0653a);
+  box-shadow: inset 0 0 0 3px rgba(13, 18, 40, 0.9);
+}
+.mf-stage__right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mf-btn {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: 50%;
+  background: var(--surface, rgba(255, 255, 255, 0.04));
+  color: var(--text, #e8ecf8);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, color 0.2s;
+}
+.mf-btn:hover {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  border-color: var(--border-hover, rgba(255, 255, 255, 0.18));
+}
+.mf-btn:focus-visible {
+  outline: 2px solid var(--accent2, #6ea8ff);
+  outline-offset: 2px;
+}
+.mf-btn svg { width: 16px; height: 16px; }
+.mf-btn--sm { width: 32px; height: 32px; }
+.mf-btn.is-on {
+  color: var(--accent, #ff8e5e);
+  border-color: var(--accent, #ff8e5e);
+  background: var(--accent-soft, rgba(255, 142, 94, 0.15));
+}
+
+.mf-btn--play {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  background: linear-gradient(145deg, var(--accent, #ff8e5e), #e0653a);
+  color: #1a1024;
+  box-shadow: 0 8px 22px rgba(255, 142, 94, 0.3);
+}
+.mf-btn--play:hover {
+  transform: scale(1.06);
+  background: linear-gradient(145deg, #ffa276, var(--accent, #ff8e5e));
+}
+.mf-btn--play svg { width: 20px; height: 20px; }
+
+/* ---------- 进度条 ---------- */
+.mf-track {
+  position: relative;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  touch-action: none;
+}
+.mf-track:hover .mf-track__thumb { transform: translate(-50%, -50%) scale(1); }
+.mf-track__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent, #ff8e5e), var(--accent2, #6ea8ff));
+}
+.mf-track__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s;
+}
+.mf-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint, #5a6285);
+}
+
+/* ---------- 音量行 ---------- */
+.mf-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.mf-vol {
+  flex: 1;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  touch-action: none;
+  position: relative;
+}
+.mf-vol__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 80%;
+  border-radius: 99px;
+  background: var(--text-dim, #8e96b8);
+}
+.mf-vol:hover .mf-vol__fill { background: var(--accent, #ff8e5e); }
+
+/* ---------- 音频加载失败提示 ---------- */
+.mf-error {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 142, 94, 0.12);
+  border: 1px solid rgba(255, 142, 94, 0.35);
+  font-size: 11px;
+  line-height: 1.5;
+  color: #ffbe9c;
+  word-break: break-all;
+}
+.mf-btn--play:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ---------- 官方嵌入模式 ---------- */
+.mf-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: #000;
+}
+
+/* ---------- 未配置时的提示 ---------- */
+.mf-hint {
+  padding: 12px;
+  border: 1px dashed var(--border-hover, rgba(255, 255, 255, 0.18));
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--text-dim, #8e96b8);
+  background: rgba(255, 255, 255, 0.02);
+}
+.mf-hint code {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent, #ff8e5e);
+  font-size: 11px;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 560px) {
+  .mf-player { right: 16px; bottom: 16px; }
+  .mf-panel {
+    width: min(330px, calc(100vw - 32px));
+    bottom: 70px;
+  }
+  .mf-fab { width: 52px; height: 52px; }
+}
+
+/* ---------- 无障碍：减少动效 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .mf-player.is-playing .mf-fab,
+  .mf-player.is-playing .mf-vinyl,
+  .mf-player.is-playing .mf-fab__disc {
+    animation: none;
+  }
+  .mf-panel { transition: opacity 0.01ms, visibility 0.01ms; }
+}
