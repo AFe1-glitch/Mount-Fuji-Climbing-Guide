@@ -27,6 +27,7 @@
     title: '富士山下',
     artist: '陈奕迅',
     album: '',
+    cover: 'img/cover.jpg',   /* 封面图路径；留空则显示黑胶唱片图案 */
 
     /* --- 行为 --- */
     startOpen: false,  /* 打开网页时是否自动展开面板 */
@@ -103,9 +104,17 @@
       return;
     }
 
+    /* 有封面就用封面，否则退回黑胶唱片图案 */
+    var discHtml = CONFIG.cover
+      ? '<div class="mf-vinyl mf-vinyl--cover">' +
+          '<img class="mf-vinyl__cover" src="' + escapeHtml(CONFIG.cover) + '"' +
+          ' alt="' + escapeHtml(CONFIG.title) + ' 封面" loading="lazy">' +
+        '</div>'
+      : '<div class="mf-vinyl"><div class="mf-vinyl__label"></div></div>';
+
     body.innerHTML =
       '<div class="mf-stage">' +
-        '<div class="mf-vinyl"><div class="mf-vinyl__label"></div></div>' +
+        discHtml +
         '<div class="mf-stage__right">' +
           '<button type="button" class="mf-btn mf-btn--play" data-act="play" aria-label="播放">' + ICON.play + '</button>' +
         '</div>' +
@@ -134,6 +143,20 @@
     els.cur    = body.querySelector('[data-role="cur"]');
     els.dur    = body.querySelector('[data-role="dur"]');
     els.err    = body.querySelector('.mf-error');
+
+    /* 封面加载失败时退回黑胶唱片图案 */
+    if (CONFIG.cover) {
+      var coverImg = body.querySelector('.mf-vinyl__cover');
+      if (coverImg) {
+        coverImg.addEventListener('error', function () {
+          var v = body.querySelector('.mf-vinyl');
+          if (v) {
+            v.classList.remove('mf-vinyl--cover');
+            v.innerHTML = '<div class="mf-vinyl__label"></div>';
+          }
+        });
+      }
+    }
 
     audio = new Audio();
     audio.preload = 'metadata';
