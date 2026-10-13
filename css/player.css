@@ -143,8 +143,8 @@
   flex: none;
   display: grid;
   place-items: center;
-  width: 78px;
-  height: 78px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
   background: repeating-radial-gradient(
     circle at 50% 50%,
@@ -157,11 +157,25 @@
   animation: mf-spin 3.6s linear infinite;
 }
 .mf-vinyl__label {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: linear-gradient(145deg, var(--accent, #ff8e5e), #e0653a);
   box-shadow: inset 0 0 0 3px rgba(13, 18, 40, 0.9);
+}
+
+/* 有封面时：去掉唱片纹理，换成圆形封面（播放中同样旋转） */
+.mf-vinyl--cover {
+  background: none;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.mf-vinyl__cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .mf-stage__right {
   flex: 1;
